@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- конфигурационный файл Spring'а -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Spring прочитает этот файл и создаст указанные бины -->
+    <!-- id это уникальный идентификатор бина; class содержит путь до класса, бин/объект которого мы хотим создать -->
+    <!-- class это класс, который будет реализовывать бин -->
+    <!-- Потом Spring прочитает конфигурационный файл applicationContext.xml, создаст указанный бин и положит его в свой
+    applicationContext. Затем мы извлечём этот бин из applicationContext'а -->
+    <!-- Этот бин не понадобится, он приведён для примера -->
+    <bean id="celsiusConverter" class="ru.converter.CelsiusToCelsiusConverter"/>
+
+    <!-- factory-method: represents the factory method that will be invoked to inject the bean
+         фабричный метод: представляет собой фабричный метод, который будет вызываться, чтобы внедрить бин -->
+
+    <!-- factory-bean: represents the reference of the bean by which factory method will be invoked;
+         it is used if factory method is non-static
+         бин фабрики: представляет собой ссылку на бин, с помощью которого будет вызван фабричный метод;
+         он используется, если фабричный метод не является статическим -->
+
+    <bean id="locale" class="java.util.Locale" factory-method="getDefault"/>
+
+    <bean id="converterFactory" class="ConverterFactory"/>
+
+    <bean id="converter" class="ru.converter.Converter" factory-bean="converterFactory" factory-method="getConverter">
+        <constructor-arg ref="locale"/>
+    </bean>
+
+
+
+</beans>
